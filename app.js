@@ -15,6 +15,9 @@ app.get('/', (req, res) => {
 // setting static file
 app.use(express.static('public'))
 
+// require restaurants data
+const restaurantList = require("./restaurant.json")
+
 // start and listen on the express server
 app.listen(port, () => {
   console.log(`Express is listening on localhost://${port}`)
