@@ -12,6 +12,9 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
+// setting static file
+app.use(express.static('public'))
+
 // start and listen on the express server
 app.listen(port, () => {
   console.log(`Express is listening on localhost://${port}`)
