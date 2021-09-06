@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
 
 // show page
 app.get('/restaurants/:id', (req, res) => {
-  res.render('show')
+  const restaurant = restaurantList.results.filter(restaurant => restaurant.id === Number(req.params.id))
+  res.render('show', { item: restaurant[0] })
 })
 
 // start and listen on the express server
