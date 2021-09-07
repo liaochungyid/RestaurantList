@@ -10,6 +10,7 @@ Use Node.js and express to demonstrate a Restaurant List web.
 
 ## Table of Contents
 
+- [Feature](#feature)
 - [Environment Setup](#environment-setup)
 - [Usage](#usage)
 - [Install](#install)
@@ -18,6 +19,13 @@ Use Node.js and express to demonstrate a Restaurant List web.
 - [Maintainers](#maintainers)
 - [License](#license)
 
+## Feature
+
+Sep. 9 21
+* User can see all restaurants lists on home page.
+* User can see more information by clicking the restaurant card.
+* User can search name and category of restaurants.
+
 ## Environment Setup
 
 1. Node.js v10.15.0
@@ -25,7 +33,7 @@ Use Node.js and express to demonstrate a Restaurant List web.
 
 ## Usage
 
-Start at LOCALHOST
+Start at Locakhost:3000
 ```js
 $ npm run start
 ```
@@ -44,7 +52,7 @@ $ git clone https://github.com/liaochungyid/RestaurantList.git
 
 ## Acknowledgments
 
-RestaurantList was inspired by ALPHAcamp(https://tw.alphacamp.co/)
+RestaurantList was inspired by [ALPHAcamp](https://tw.alphacamp.co/)
 
 ## See Also
 
