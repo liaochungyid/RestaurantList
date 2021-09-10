@@ -10,7 +10,7 @@ Use Node.js and express to demonstrate a Restaurant List web.
 
 ## Table of Contents
 
-- [Feature](#feature)
+- [Features](#features)
 - [Environment Setup](#environment-setup)
 - [Usage](#usage)
 - [Install](#install)
@@ -19,7 +19,7 @@ Use Node.js and express to demonstrate a Restaurant List web.
 - [Maintainers](#maintainers)
 - [License](#license)
 
-## Feature
+## Features
 
 Sep. 9 21
 * User can see all restaurants lists on home page.

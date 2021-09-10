@@ -31,8 +31,13 @@ app.get('/search', (req, res) => {
 
 // show page
 app.get('/restaurants/:id', (req, res) => {
-  const restaurant = restaurantList.results.filter(restaurant => restaurant.id === Number(req.params.id))
-  res.render('show', { item: restaurant[0] })
+  const restaurants = restaurantList.results.filter(restaurant => restaurant.id === Number(req.params.id))
+  if (Array.isArray(restaurants) && restaurants.length === 1) {
+    res.render('show', { item: restaurants[0] })
+  } else {
+    res.render('error', { error: "OOPS! Something wrong..." })
+  }
+
 })
 
 // start and listen on the express server
