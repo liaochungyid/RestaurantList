@@ -25,13 +25,14 @@ app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
     .sort({ rating: 'desc' })
-    .then(restaurants => res.render('index', { restaurants }))
+    .then(restaurants => {
+      res.render('index', { restaurants })
+    })
     .catch(err => console.log(err))
 })
 
 // search (home page)
 app.get('/search', (req, res) => {
-  // const keyword = LCandRS(req.query.keyword)
   const keyword = req.query.keyword
   Restaurant.find({
     $or: [{
@@ -56,13 +57,16 @@ app.get('/search', (req, res) => {
 
 // show page
 app.get('/restaurants/:id', (req, res) => {
-  const restaurants = restaurantList.results.filter(restaurant => restaurant.id === Number(req.params.id))
-  if (Array.isArray(restaurants) && restaurants.length === 1) {
-    res.render('show', { item: restaurants[0] })
-  } else {
-    res.render('error', { error: "OOPS! Something wrong..." })
-  }
-
+  // console.log(req.params.id)
+  Restaurant.findById(req.params.id)
+    .lean()
+    .then(restaurant => {
+      if (!restaurant) {
+        return res.render('index', { error_msg: "OOPS! Something wrong..." })
+      }
+      res.render('show', { restaurant })
+    })
+    .catch(err => console.log(err))
 })
 
 // start and listen on the express server
