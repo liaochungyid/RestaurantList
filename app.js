@@ -1,10 +1,13 @@
 const express = require("express")
-const app = express()
-const port = 3000
 const exphbs = require("express-handlebars")
 
-// my models file
+require('./config/mongoose')
+
+// utilities file
 const LCandRS = require("./models/utilities")
+
+const app = express()
+const port = 3000
 
 // setting template engine
 app.engine('hbs', exphbs({ defaultLayout: "main", extname: ".hbs" }))
@@ -14,12 +17,17 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 // require restaurants data
-const restaurantList = require("./restaurant.json")
+const Restaurant = require('./models/restaurantSchema')
+const restaurant = require("./restaurant.json")
 
 // routes setting
-// index page
+// home page
 app.get('/', (req, res) => {
-  res.render('index', { item: restaurantList.results })
+  Restaurant.find()
+    .lean()
+    .sort({ rating: 'desc' })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(err => console.log(err))
 })
 
 // search (index page)
