@@ -19,6 +19,9 @@
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
+    {{#if error_msg}}
+    <h1 class="mb-1 restaurant-show-error">{{error_msg}}</h1>
+    {{/if}}
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
         {{#each restaurants}}

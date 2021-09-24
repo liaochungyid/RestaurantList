@@ -18,7 +18,6 @@ app.use(express.static('public'))
 
 // require restaurants data
 const Restaurant = require('./models/restaurantSchema')
-const restaurant = require("./restaurant.json")
 
 // routes setting
 // home page
@@ -30,11 +29,29 @@ app.get('/', (req, res) => {
     .catch(err => console.log(err))
 })
 
-// search (index page)
+// search (home page)
 app.get('/search', (req, res) => {
-  const keyword = LCandRS(req.query.keyword)
-  const restaurants = restaurantList.results.filter(restaurant => LCandRS(restaurant.name).includes(keyword) || LCandRS(restaurant.category).includes(keyword))
-  res.render('index', { item: restaurants, keyword })
+  // const keyword = LCandRS(req.query.keyword)
+  const keyword = req.query.keyword
+  Restaurant.find({
+    $or: [{
+      name: {
+        $regex: keyword, $options: 'ix'
+      }
+    }, {
+      category: {
+        $regex: keyword, $options: 'ix'
+      }
+    }]
+  })
+    .lean()
+    .then(restaurants => {
+      if (!restaurants.length) {
+        return res.render('index', { error_msg: '關鍵字搜尋不到關聯餐廳', keyword })
+      }
+      res.render('index', { restaurants, keyword })
+    })
+    .catch(err => console.log(err))
 })
 
 // show page
