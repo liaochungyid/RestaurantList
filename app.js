@@ -1,10 +1,8 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
 
-require('./config/mongoose')
 
-// utilities file
-const LCandRS = require("./models/utilities")
+require('./config/mongoose')
 
 const app = express()
 const port = 3000
@@ -15,6 +13,9 @@ app.set('view engine', 'hbs')
 
 // setting static file
 app.use(express.static('public'))
+
+// body-parser
+app.use(express.urlencoded({ extended: true }))
 
 // require restaurants data
 const Restaurant = require('./models/restaurantSchema')
@@ -57,7 +58,6 @@ app.get('/search', (req, res) => {
 
 // show page
 app.get('/restaurants/:id', (req, res) => {
-  // console.log(req.params.id)
   Restaurant.findById(req.params.id)
     .lean()
     .then(restaurant => {
@@ -66,6 +66,18 @@ app.get('/restaurants/:id', (req, res) => {
       }
       res.render('show', { restaurant })
     })
+    .catch(err => console.log(err))
+})
+
+// create page
+app.get('/create', (req, res) => {
+  res.render('create')
+})
+
+// create
+app.post('/', (req, res) => {
+  Restaurant.create(req.body)
+    .then(res.redirect('/'))
     .catch(err => console.log(err))
 })
 
