@@ -103,13 +103,41 @@
             </div>
 
             <div class="text-right">
-              <button class="btn btn-success" type="submit">Edit</button>
+              <a href="/">
+                <button class="btn btn-secondary btn-lg" type="button">Cancel</button>
+              </a>
+              <button class="btn btn-success btn-lg mx-4" type="submit">Edit</button>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Delete
+              </button>
             </div>
           </form>
-          <form method="POST" action="/delete/{{ restaurant._id }}" style="display: inline">
-            <button class="btn btn-danger" type="submit">Delete</button>
-          </form>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">！！！注意！！！</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        你將<strong>刪除</strong>本筆餐廳資料！
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <form method="POST" action="/restaurants/{{ restaurant._id }}/delete" style="display: inline">
+          <button type="submit" class="btn btn-danger">確認刪除</button>
+        </form>
       </div>
     </div>
   </div>

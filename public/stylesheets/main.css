@@ -1,3 +1,7 @@
+html, body {
+  min-width: 375px;
+}  
+
 header {
   overflow: hidden;
 }
@@ -9,6 +13,7 @@ header .navbar {
   z-index: 999;
   height: 49.5px;
   width: 100vw;
+  min-width: 375px;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .08);
 }
 
@@ -92,6 +97,8 @@ header .navbar {
 }
 
 .restaurant-show-error {
+  display: block;
+  margin: auto;
   color: #666666;
   text-align: center;
   font-size: 3rem;

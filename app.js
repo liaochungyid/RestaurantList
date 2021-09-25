@@ -27,6 +27,9 @@ app.get('/', (req, res) => {
     .lean()
     .sort({ rating: 'desc' })
     .then(restaurants => {
+      if (restaurants.length === 0) {
+        return res.render('index', { error_msg: '資料庫沒有餐廳！' })
+      }
       res.render('index', { restaurants })
     })
     .catch(err => console.log(err))
@@ -82,23 +85,22 @@ app.post('/', (req, res) => {
 })
 
 // delete
-app.post('/delete/:id', (req, res) => {
+app.post('/restaurants/:id/delete', (req, res) => {
   Restaurant.findById(req.params.id)
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch(err => console.log(err))
 })
 
-// edit
+// edit page
 app.get('/restaurants/:id/edit', (req, res) => {
   Restaurant.findById(req.params.id)
     .lean()
-    .then(restaurant => {
-      res.render('edit', { restaurant })
-    })
+    .then(restaurant => res.render('edit', { restaurant }))
     .catch(err => console.log(err))
 })
 
+// edit
 app.post('/restaurants/:id/edit', (req, res) => {
   const { name,
     name_en,
@@ -110,7 +112,6 @@ app.post('/restaurants/:id/edit', (req, res) => {
     rating,
     description } = req.body
 
-  console.log(rating)
   Restaurant.findById(req.params.id)
     .then(restaurant => {
       restaurant.name = name
