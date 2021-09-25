@@ -3,8 +3,8 @@
 > A backend demo repo
 
 Use Node.js and express to demonstrate a Restaurant List web.
+CRUD basic operations of persistent storage
 * MVC architecture (partial in progress)
-* CRUD basic operations of persistent storage (work in progress)
 * RESTful design (work in progress)
 * Login function (work in progress)
 
@@ -25,6 +25,9 @@ Sep. 9 21
 * User can see all restaurants lists on home page.
 * User can see more information by clicking the restaurant card.
 * User can search name and category of restaurants.
+* User can create a new restaurant on the list.
+* User can update(edit) a restaurant.
+* User can delete a restaurant on list.
 
 ## Environment Setup
 
@@ -43,6 +46,20 @@ Run for developing
 $ npm run dev
 ```
 
+You might encounter an error like this
+```js
+$ // ReferenceError: TextEncoder is not defined
+```
+To fix this temporarilly, please modify file:
+./node_modules/whatwg-url/dist/encoding.js
+Adding the following
+```js
+$ "use strict";
+$ let { TextEncoder, TextDecoder } = require("util"); // add this line
+$ const utf8Encoder = new TextEncoder();
+$ const utf8Decoder = new TextDecoder("utf-8", { ignoreBOM: true });
+$ //...
+```
 ## Install
 
 Terminal clone
