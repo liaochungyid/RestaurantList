@@ -59,6 +59,18 @@ app.get('/search', (req, res) => {
     .catch(err => console.log(err))
 })
 
+// create page
+app.get('/restaurants/create', (req, res) => {
+  res.render('create')
+})
+
+// create
+app.post('/', (req, res) => {
+  Restaurant.create(req.body)
+    .then(res.redirect('/'))
+    .catch(err => console.log(err))
+})
+
 // show page
 app.get('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id)
@@ -69,18 +81,6 @@ app.get('/restaurants/:id', (req, res) => {
       }
       res.render('show', { restaurant })
     })
-    .catch(err => console.log(err))
-})
-
-// create page
-app.get('/create', (req, res) => {
-  res.render('create')
-})
-
-// create
-app.post('/', (req, res) => {
-  Restaurant.create(req.body)
-    .then(res.redirect('/'))
     .catch(err => console.log(err))
 })
 
