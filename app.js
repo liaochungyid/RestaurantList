@@ -1,6 +1,6 @@
 const express = require("express")
 const exphbs = require("express-handlebars")
-
+const methodOverride = require("method-override")
 
 require('./config/mongoose')
 
@@ -16,6 +16,9 @@ app.use(express.static('public'))
 
 // body-parser
 app.use(express.urlencoded({ extended: true }))
+
+// method-override
+app.use(methodOverride('_method'))
 
 // require restaurants data
 const Restaurant = require('./models/restaurantSchema')
@@ -85,7 +88,7 @@ app.get('/restaurants/:id', (req, res) => {
 })
 
 // delete
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id)
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
@@ -101,7 +104,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 // edit
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const { name,
     name_en,
     category,
