@@ -22,9 +22,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 // routes
-app.use(routes)
+require('./routes')(app)
 
 // start and listen on the express server
 app.listen(port, () => {
-  console.log(`Express is listening on localhost://${port}`)
+  console.log(`Express is listening on localhost:${port}`)
 })

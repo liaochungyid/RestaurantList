@@ -4,21 +4,21 @@ const Schema = mongoose.Schema
 const restaurantSchema = new Schema({
   name: {
     type: String,
-    require: true
+    required: true
   },
   name_en: {
     type: String
   },
   category: {
     type: String,
-    require: true
+    required: true
   },
   image: {
     type: String
   },
   location: {
     type: String,
-    require: true
+    required: true
   },
   phone: {
     type: String
