@@ -5,7 +5,7 @@
 Use Node.js and express to demonstrate a Restaurant List web.
 * CRUD basic operations of persistent storage
 * RESTful routes design 
-* MVC architecture (partial in progress)
+* MVC architecture
 * Login function (work in progress)
 
 ## Table of Contents
