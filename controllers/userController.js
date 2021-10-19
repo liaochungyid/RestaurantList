@@ -8,6 +8,10 @@ const userController = {
   postLogin: (req, res) => {
     res.redirect('/')
   },
+  getLogout: (req, res) => {
+    req.logout()
+    res.redirect('/users/login')
+  },
   getRegister: (req, res) => {
     res.render('register')
   },
