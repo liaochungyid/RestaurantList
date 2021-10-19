@@ -13,4 +13,9 @@ module.exports = (app) => {
   app.get('/restaurants/:id/edit', adminController.editRestaurant)
   app.put('/restaurants/:id/', adminController.putRestaurant)
   app.delete('/restaurants/:id', adminController.deleteRestaurant)
+
+  app.get('/users/login', userController.getLogin)
+  app.post('/users/login', userController.postLogin)
+  app.get('/users/register', userController.getRegister)
+  app.post('/users/register', userController.postRegister)
 }
