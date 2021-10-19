@@ -1,3 +1,4 @@
+const passport = require('passport')
 const User = require('../models/userSchema')
 
 const userController = {

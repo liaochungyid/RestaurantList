@@ -2,7 +2,7 @@ const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 
-module.exports = (app) => {
+module.exports = (app, passport) => {
   app.get('/', restController.getRestaurants)
   app.get('/search', restController.getSearchRestaurants)
   app.get('/search/:field_dir', restController.getSortRestaurants)
@@ -15,7 +15,9 @@ module.exports = (app) => {
   app.delete('/restaurants/:id', adminController.deleteRestaurant)
 
   app.get('/users/login', userController.getLogin)
-  app.post('/users/login', userController.postLogin)
+  app.post('/users/login', passport.authenticate('local', {
+    failureRedirect: '/users/login'
+  }), userController.postLogin)
   app.get('/users/register', userController.getRegister)
   app.post('/users/register', userController.postRegister)
 }
