@@ -20,8 +20,8 @@ const userController = {
     const { name, email, password, confirmPassword } = req.body
     const errors = []
 
-    if (!name || !email || !password || !confirmPassword) errors.push({ message: '所有欄位都是必填。' })
-
+    if (!email) errors.push({ message: '請輸入email欄位。' })
+    if (!password) errors.push({ message: '請輸入密碼，並確認密碼。' })
     if (password !== confirmPassword) errors.push({ message: '密碼與確認密碼不相符。' })
 
     User.findOne({ email })
