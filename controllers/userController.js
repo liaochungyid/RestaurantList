@@ -1,4 +1,4 @@
-const passport = require('passport')
+const bcrypt = require('bcryptjs')
 const User = require('../models/userSchema')
 
 const userController = {
@@ -30,7 +30,9 @@ const userController = {
         if (errors.length) {
           return res.render('register', { name, email, password, confirmPassword, errors })
         }
-        return User.create({ name, email, password })
+        return bcrypt.genSalt(10)
+          .then(salt => bcrypt.hash(password, salt))
+          .then(hash => User.create({ name, email, password: hash }))
       })
       .then(() => {
         if (!errors.length) {
