@@ -2,7 +2,7 @@ const Restaurant = require('../models/restaurantSchema')
 
 const restController = {
   getRestaurants: (req, res) => {
-    Restaurant.find()
+    Restaurant.find({ userId: req.user._id })
       .lean()
       .sort({ rating: 'desc' })
       .then(restaurants => {
@@ -17,7 +17,7 @@ const restController = {
   getSortRestaurants: (req, res) => {
     const [field, dir] = req.params.field_dir.split('_')
 
-    Restaurant.find()
+    Restaurant.find({ userId: req.user._id })
       .lean()
       .sort({ [field]: dir })
       .then(restaurants => {
@@ -40,7 +40,7 @@ const restController = {
         category: {
           $regex: keyword, $options: 'ix'
         }
-      }]
+      }], userId: req.user._id
     })
       .lean()
       .then(restaurants => {

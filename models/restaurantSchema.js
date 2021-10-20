@@ -35,6 +35,12 @@ const restaurantSchema = new Schema({
   createAt: {
     type: Date,
     default: Date.now
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
   }
 })
 

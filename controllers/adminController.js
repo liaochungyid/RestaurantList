@@ -6,13 +6,13 @@ const adminController = {
   },
 
   postRestaurant: (req, res) => {
-    Restaurant.create(req.body)
+    Restaurant.create(Object.assign(req.body, { userId: req.user._id }))
       .then(res.redirect('/'))
       .catch(err => console.log(err))
   },
 
   getRestaurant: (req, res) => {
-    Restaurant.findById(req.params.id)
+    Restaurant.findOne({ _id: req.params.id, userId: req.user._id })
       .lean()
       .then(restaurant => {
         if (!restaurant) {
@@ -24,14 +24,14 @@ const adminController = {
   },
 
   editRestaurant: (req, res) => {
-    Restaurant.findById(req.params.id)
+    Restaurant.findOne({ _id: req.params.id, userId: req.user._id })
       .lean()
       .then(restaurant => res.render('edit', { restaurant }))
       .catch(err => console.log(err))
   },
 
   putRestaurant: (req, res) => {
-    Restaurant.findById(req.params.id)
+    Restaurant.findOne({ _id: req.params.id, userId: req.user._id })
       .then(restaurant => {
         restaurant = Object.assign(restaurant, req.body)
         return restaurant.save()
@@ -41,7 +41,7 @@ const adminController = {
   },
 
   deleteRestaurant: (req, res) => {
-    Restaurant.findById(req.params.id)
+    Restaurant.findOne({ _id: req.params.id, userId: req.user._id })
       .then(restaurant => restaurant.remove())
       .then(() => res.redirect('/'))
       .catch(err => console.log(err))
