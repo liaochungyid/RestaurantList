@@ -7,6 +7,7 @@ module.exports = (app, passport) => {
     if (req.isAuthenticated()) {
       return next()
     }
+    req.flash('warning_msg', '請先登入才能使用！')
     res.redirect('/users/login')
   }
 
@@ -23,7 +24,8 @@ module.exports = (app, passport) => {
 
   app.get('/users/login', userController.getLogin)
   app.post('/users/login', passport.authenticate('local', {
-    failureRedirect: '/users/login'
+    failureRedirect: '/users/login',
+    failureflash: true
   }), userController.postLogin)
   app.get('/users/logout', userController.getLogout)
   app.get('/users/register', userController.getRegister)

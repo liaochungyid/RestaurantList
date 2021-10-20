@@ -4,12 +4,13 @@ const User = require('../models/userSchema')
 
 // 設定本地登入策略
 passport.use(new LocalStrategy({
-  usernameField: 'email'
-}, (email, password, cb) => {
+  usernameField: 'email',
+  passReqToCallback: true
+}, (req, email, password, cb) => {
   User.findOne({ email })
     .then(user => {
-      if (!user) return cb(null, false, { message: 'The email is not registered.' })
-      if (user.password !== password) return deleteOne(null, false, { message: 'Email or Password incorrect.' })
+      if (!user) return cb(null, false, req.flash('warning_msg', '此 email 沒有註冊。'))
+      if (user.password !== password) return cb(null, false, req.flash('warning_msg', 'Email 或 Password 錯誤。'))
 
       return cb(null, user)
     })

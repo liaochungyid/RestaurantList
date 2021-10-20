@@ -10,6 +10,7 @@ const userController = {
   },
   getLogout: (req, res) => {
     req.logout()
+    req.flash('success_msg', '你已成功登出。')
     res.redirect('/users/login')
   },
   getRegister: (req, res) => {
@@ -17,28 +18,28 @@ const userController = {
   },
   postRegister: (req, res) => {
     const { name, email, password, confirmPassword } = req.body
+    const errors = []
 
-    if (password !== confirmPassword) {
-      console.log('Password and confirm password are not the same.')
-      return res.render('register', {
-        name, email, password, confirmPassword
-      })
-    }
+    if (!name || !email || !password || !confirmPassword) errors.push({ message: '所有欄位都是必填。' })
 
-    User.findOne({ email }).then(user => {
-      if (user) {
-        console.log('Email has already been registered.')
-        return res.render('register', {})
-      }
-    })
+    if (password !== confirmPassword) errors.push({ message: '密碼與確認密碼不相符。' })
 
-    User.create({ name, email, password })
+    User.findOne({ email })
       .then(user => {
-        console.log('User registered successfully.')
-        res.redirect('/users/login')
+        if (user) errors.push({ message: '這個Email已經註冊過了' })
+        if (errors.length) {
+          return res.render('register', { name, email, password, confirmPassword, errors })
+        }
+        return User.create({ name, email, password })
+      })
+      .then(() => {
+        if (!errors.length) {
+          req.flash('success_msg', '成功完成註冊。')
+          req.flash('email', email)
+          res.redirect('/users/login')
+        }
       })
       .catch(err => console.log(err))
-
   }
 }
 
