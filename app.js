@@ -25,6 +25,11 @@ app.use(session({
 // setting passport
 app.use(passport.initialize())
 app.use(passport.session())
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
 
 // setting static file
 app.use(express.static('public'))

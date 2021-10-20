@@ -23,14 +23,17 @@
         <a class="navbar-brand" href="/">
           <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
             width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-          中意餐廳清單
+          {{#if isAuthenticated}}{{ user.name }}{{/if}}餐廳清單
         </a>
+        {{#if isAuthenticated}}
         <a class="btn btn-outline-secondary" href="/users/logout">
           Logout
         </a>
-        <a class="btn btn-outline-success" href="/restaurants/create">
-          Add a new restaurant
+        {{else}}
+        <a class="btn btn-outline-secondary" href="/users/login">
+          Login
         </a>
+        {{/if}}
       </div>
     </nav>
 
