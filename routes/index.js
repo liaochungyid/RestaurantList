@@ -30,6 +30,7 @@ module.exports = (app, passport) => {
   app.get('/users/logout', userController.getLogout)
   app.get('/users/register', userController.getRegister)
   app.post('/users/register', userController.postRegister)
-  app.get('/users/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }))
-  app.get('/users/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/users/login' }), userController.postLogin)
+
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }))
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/users/login' }), userController.postLogin)
 }

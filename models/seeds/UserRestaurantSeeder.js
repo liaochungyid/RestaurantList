@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const User = require('../userSchema')
 const Restaurant = require('../restaurantSchema')
+
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
+
 const db = require('../../config/mongoose')
 
 const restaurantSeed = require('../../restaurant.json').results
@@ -27,13 +30,13 @@ bcrypt.genSalt(10)
         .create(userSeed)
         .then((user) => {
           const [{ _id: user1_id }, { _id: user2_id }] = user
-          restaurantSeed.forEach((item, index) => {
+          return Promise.all(restaurantSeed.map((item, index) => {
             if (index < restaurantSeed.length / 2) {
-              Restaurant.create(Object.assign(item, { userId: user1_id }))
+              return Restaurant.create(Object.assign(item, { userId: user1_id }))
             } else {
-              Restaurant.create(Object.assign(item, { userId: user2_id }))
+              return Restaurant.create(Object.assign(item, { userId: user2_id }))
             }
-          })
+          }))
         })
         .finally(() => {
           console.log('Has Created users and restaurants seeds in mongoDB.')
@@ -41,12 +44,8 @@ bcrypt.genSalt(10)
           userSeed.map(item => {
             console.log(`You are able to use: ${item.email} with password ${password} to login.`)
           })
+          mongoose.disconnect()
         })
         .catch(err => console.log(err))
     })
   })
-
-
-
-
-setTimeout(() => mongoose.disconnect(), 3000)
