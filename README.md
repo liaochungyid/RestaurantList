@@ -6,7 +6,7 @@ Use Node.js and express to demonstrate a Restaurant List web.
 * CRUD basic operations of persistent storage
 * RESTful routes design 
 * MVC architecture
-* Login function (work in progress)
+* Login function (Local and Facebook)
 
 ## Table of Contents
 
@@ -22,12 +22,16 @@ Use Node.js and express to demonstrate a Restaurant List web.
 ## Features
 
 Sep. 9 21
-* User can see all restaurants lists on home page.
+* User can see all his/her restaurants lists on home page.
 * User can see more information by clicking the restaurant card.
 * User can search name and category of restaurants.
+* User can sort restaurants.
 * User can create a new restaurant on the list.
 * User can update(edit) a restaurant.
 * User can delete a restaurant on list.
+* User can register an account (email and password required).
+* User can register an account with facebook.
+* User can see error, warning or success message, if something happened on register, login or logout ,  
 
 ## Environment Setup
 
@@ -36,7 +40,7 @@ Sep. 9 21
 
 ## Usage
 
-Start at Locakhost:3000
+Start at http://locakhost:3000
 ```js
 $ npm run start
 ```
